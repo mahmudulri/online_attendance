@@ -81,6 +81,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.17.1"
+  crypto:
+    dependency: transitive
+    description:
+      name: crypto
+      sha256: ff625774173754681d66daaf4a448684fb04b78f902da9cb3d308c19cc5e8bab
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.3"
   cupertino_icons:
     dependency: "direct main"
     description:
@@ -208,6 +216,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.1"
+  google_fonts:
+    dependency: "direct main"
+    description:
+      name: google_fonts
+      sha256: "6b6f10f0ce3c42f6552d1c70d2c28d764cf22bb487f50f66cca31dcd5194f4d6"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.0.4"
   http:
     dependency: "direct main"
     description:
@@ -224,6 +240,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.0.2"
+  intl:
+    dependency: "direct main"
+    description:
+      name: intl
+      sha256: "3bc132a9dbce73a7e4a21a17d06e1878839ffbf975568bc875c60537824b0c4d"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.18.1"
   js:
     dependency: transitive
     description:
@@ -349,6 +373,22 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.99"
+  slide_action:
+    dependency: "direct main"
+    description:
+      name: slide_action
+      sha256: "6eabc637d767eaa71905f01a24dbf037c120dd596157e52b7d5c8af82cedcf1c"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.0.2"
+  slide_to_act:
+    dependency: "direct main"
+    description:
+      name: slide_to_act
+      sha256: e3ed8b7fdb3f4bff43ac3370c9dd27b4e48fb2518007f6d28745109f7aea275d
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.1"
   source_span:
     dependency: transitive
     description:

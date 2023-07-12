@@ -42,6 +42,10 @@ dependencies:
   get_storage:
   http: ^0.13.5
   curved_navigation_bar: ^1.0.3
+  google_fonts:
+  slide_action:
+  slide_to_act: ^2.0.1
+  intl: ^0.18.1
 
 dev_dependencies:
   flutter_test:

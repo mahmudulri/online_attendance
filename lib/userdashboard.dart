@@ -27,37 +27,39 @@ class _UserDashboardState extends State<UserDashboard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          title: Text(box.read("userID")),
-        ),
-        bottomNavigationBar: CurvedNavigationBar(
-          index: selectedIndex,
+      // appBar: AppBar(
+      //   title: Text(box.read("userID")),
+      // ),
+      bottomNavigationBar: CurvedNavigationBar(
+        index: selectedIndex,
 
-          backgroundColor: Colors.transparent,
-          // height: 70,
-          color: Color(0xff3498db),
-          items: [
-            Icon(
-              Icons.home,
-              size: 30,
-              color: Colors.white,
-            ),
-            Icon(
-              CupertinoIcons.shopping_cart,
-              size: 30,
-              color: Colors.white,
-            ),
-            Icon(
-              CupertinoIcons.person,
-              size: 30,
-              color: Colors.white,
-            ),
-          ],
-          onTap: (index) {
-            setState(() {
-              selectedIndex = index;
-            });
-          },
-        ));
+        backgroundColor: Colors.transparent,
+        // height: 70,
+        color: Color(0xff3498db),
+        items: [
+          Icon(
+            Icons.check,
+            size: 30,
+            color: Colors.white,
+          ),
+          Icon(
+            CupertinoIcons.calendar,
+            size: 30,
+            color: Colors.white,
+          ),
+          Icon(
+            CupertinoIcons.person,
+            size: 30,
+            color: Colors.white,
+          ),
+        ],
+        onTap: (index) {
+          setState(() {
+            selectedIndex = index;
+          });
+        },
+      ),
+      body: pages[selectedIndex],
+    );
   }
 }
