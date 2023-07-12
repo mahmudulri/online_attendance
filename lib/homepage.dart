@@ -2,12 +2,15 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:wifi_ip_details/wifi_ip_details.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:online_attendance/userdashboard.dart';
 
 import 'checkip/ipcontroller.dart';
 
 class Homepage extends StatelessWidget {
   Homepage({super.key});
+
+  final box = GetStorage();
 
   TextEditingController userIdController = TextEditingController();
   TextEditingController passController = TextEditingController();
@@ -74,7 +77,7 @@ class Homepage extends StatelessWidget {
                   // String userID = userIdController.text.trim();
                   // String passWord = passController.text.trim();
                   String userID = "hasan22";
-                  String passWord = "abcd123";
+                  String passWord = "abc123";
 
                   QuerySnapshot snapshot = await FirebaseFirestore.instance
                       .collection("Employee")
@@ -85,6 +88,9 @@ class Homepage extends StatelessWidget {
 
                   if (passWord == snapshot.docs[0]["passWord"]) {
                     print("Successfully logged");
+                    box.write("userID", snapshot.docs[0]["userID"]);
+                    print(box.read("userID"));
+                    Get.to(() => UserDashboard());
                   } else {
                     print("error");
                   }
