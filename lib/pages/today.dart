@@ -14,6 +14,9 @@ class Today extends StatefulWidget {
 }
 
 class _TodayState extends State<Today> {
+  final officeTime =
+      FirebaseFirestore.instance.collection("Starting-time").snapshots();
+
   final box = GetStorage();
   DateTime now = DateTime.now();
 
@@ -25,9 +28,18 @@ class _TodayState extends State<Today> {
   @override
   void initState() {
     checkStatus();
+    myofficeTime();
 
     super.initState();
   }
+
+  // checkTime() async {
+  //   final officeTime = FirebaseFirestore.instance
+  //       .collection("Officetime")
+  //       .doc("starting-time")
+  //       .snapshots();
+  //   print(officeTime.toString());
+  // }
 
   checkStatus() async {
     try {
@@ -57,16 +69,46 @@ class _TodayState extends State<Today> {
     isLoading(false);
   }
 
+  var maintime;
+  var startTime;
+  var endTime;
+
+  myofficeTime() {
+    FirebaseFirestore.instance
+        .collection('Officetime')
+        .doc("realtime")
+        .get()
+        .then((DocumentSnapshot documentSnapshot) {
+      if (documentSnapshot.exists) {
+        // print('Document data: ${documentSnapshot.data()}');
+        maintime = documentSnapshot.data();
+        startTime = maintime["start"];
+        endTime = maintime["end"];
+        // print(hasan['start']);
+        //Set the relevant data to variables as needed
+      } else {
+        print('Document does not exist on the database');
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    print(officeTime);
+
     DateTime dt1 = DateTime.parse(DateTime.now().toString());
     DateTime dt2 = DateTime.parse("2023-07-13 09:00:00");
     Duration diff = dt1.difference(dt2);
-    print(diff.inMinutes);
+    // print(diff.inMinutes);
 
     var screenHeight = MediaQuery.of(context).size.height;
     var screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
+      floatingActionButton: FloatingActionButton(onPressed: () {
+        setState(() {
+          print(DateFormat('EE dd').format(DateTime.now()));
+        });
+      }),
       body: Obx(
         () => isLoading.value == true
             ? Center(
@@ -81,35 +123,76 @@ class _TodayState extends State<Today> {
               )
             : Padding(
                 padding: EdgeInsets.only(
-                  top: 50,
                   left: 20,
                   right: 20,
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "Welcome",
-                      style: GoogleFonts.lato(
-                        fontWeight: FontWeight.w400,
-                        fontSize: screenWidth / 20,
-                      ),
-                    ),
-                    Text(
-                      box.read(
-                        "userID",
-                      ),
-                      style: GoogleFonts.lato(
-                        fontWeight: FontWeight.w500,
-                        fontSize: screenWidth / 20,
-                      ),
-                    ),
-                    Text(
-                      "Today's Status",
-                      style: GoogleFonts.lato(
-                        fontWeight: FontWeight.w400,
-                        fontSize: screenWidth / 20,
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Column(
+                          children: [
+                            Text(
+                              "${DateFormat.d().format(now)}-${DateFormat.MMMM().format(now)}-${DateFormat.y().format(now)}",
+                              style: GoogleFonts.lato(
+                                fontWeight: FontWeight.w400,
+                                fontSize: screenWidth * 0.040,
+                              ),
+                            ),
+                            StreamBuilder(
+                              stream: Stream.periodic(Duration(seconds: 1)),
+                              builder: (context, snapshot) {
+                                return Text(
+                                  DateFormat('hh:mm:ss a')
+                                      .format(DateTime.now()),
+                                  style: GoogleFonts.lato(
+                                    fontWeight: FontWeight.w900,
+                                    fontSize: screenWidth / 20,
+                                  ),
+                                );
+                              },
+                            ),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            Text(
+                              "Office Start",
+                              style: GoogleFonts.lato(
+                                fontWeight: FontWeight.w400,
+                                fontSize: screenWidth * 0.030,
+                              ),
+                            ),
+                            Text(
+                              "${startTime} AM",
+                              style: GoogleFonts.lato(
+                                fontWeight: FontWeight.w400,
+                                fontSize: screenWidth * 0.030,
+                              ),
+                            ),
+                          ],
+                        ),
+                        Column(
+                          children: [
+                            Text(
+                              "Office Clossing",
+                              style: GoogleFonts.lato(
+                                fontWeight: FontWeight.w400,
+                                fontSize: screenWidth * 0.030,
+                              ),
+                            ),
+                            Text(
+                              "${endTime} PM",
+                              style: GoogleFonts.lato(
+                                fontWeight: FontWeight.w400,
+                                fontSize: screenWidth * 0.030,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
                     ),
                     Container(
                       margin: EdgeInsets.only(top: 15, bottom: 25),
@@ -174,28 +257,6 @@ class _TodayState extends State<Today> {
                         ],
                       ),
                     ),
-                    Text(
-                      "${DateFormat.d().format(now)}-${DateFormat.MMMM().format(now)}-${DateFormat.y().format(now)}",
-                      style: GoogleFonts.lato(
-                        fontWeight: FontWeight.w400,
-                        fontSize: screenWidth / 20,
-                      ),
-                    ),
-                    SizedBox(
-                      height: 5,
-                    ),
-                    StreamBuilder(
-                      stream: Stream.periodic(Duration(seconds: 1)),
-                      builder: (context, snapshot) {
-                        return Text(
-                          DateFormat('hh:mm:ss a').format(DateTime.now()),
-                          style: GoogleFonts.lato(
-                            fontWeight: FontWeight.w400,
-                            fontSize: screenWidth / 20,
-                          ),
-                        );
-                      },
-                    ),
                     checkIn == "--/--"
                         ? Container(
                             margin: EdgeInsets.only(top: 15),
@@ -229,6 +290,9 @@ class _TodayState extends State<Today> {
                                       "checkIn": DateFormat('hh:mm')
                                           .format(DateTime.now()),
                                       "checkout": "--/--",
+                                      "dayName": DateFormat('EE dd')
+                                          .format(DateTime.now()),
+                                      "late": "5.20",
                                     });
                                     checkStatus();
                                   },

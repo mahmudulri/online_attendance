@@ -45,7 +45,8 @@ dependencies:
   google_fonts:
   slide_action:
   slide_to_act: ^2.0.1
-  intl: ^0.18.1
+  intl: ^0.18.0
+  month_year_picker: ^0.3.0+1
 
 dev_dependencies:
   flutter_test:

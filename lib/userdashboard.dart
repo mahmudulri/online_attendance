@@ -27,15 +27,17 @@ class _UserDashboardState extends State<UserDashboard> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text(box.read("userID")),
-      // ),
+      drawer: Drawer(),
+      appBar: AppBar(
+        title: Text("data"),
+        // title: Text(box.read("userID")),
+      ),
       bottomNavigationBar: CurvedNavigationBar(
         index: selectedIndex,
 
         backgroundColor: Colors.transparent,
         // height: 70,
-        color: Color(0xff3498db),
+        color: Colors.blueGrey,
         items: [
           Icon(
             Icons.check,

@@ -89,7 +89,9 @@ class Homepage extends StatelessWidget {
                   if (passWord == snapshot.docs[0]["passWord"]) {
                     print("Successfully logged");
                     box.write("userID", snapshot.docs[0]["userID"]);
+                    box.write("uniqueID", snapshot.docs[0].id);
                     print(box.read("userID"));
+                    print(box.read("uniqueID"));
                     Get.to(() => UserDashboard());
                   } else {
                     print("error");
